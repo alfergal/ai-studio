@@ -1,12 +1,17 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-project-card',
-  imports: [],
+  standalone: true,
+  imports: [RouterLink],
   templateUrl: './project-card.html',
   styleUrl: './project-card.css',
 })
 export class ProjectCard {
-  @Input() title!: string;
-  @Input() description!: string;
+
+  id = input.required<string>();
+  title = input.required<string>();
+  description = input.required<string>();
+
 }

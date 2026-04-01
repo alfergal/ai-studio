@@ -1,16 +1,15 @@
 <section class="mx-auto max-w-7xl px-6 py-10">
-
   <h1 class="text-3xl font-bold mb-8 text-secondary">
     AI Projects
   </h1>
 
   <div class="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-    @for (project of projects; track project.title) {
+    @for (project of projects(); track project.id) {
       <app-project-card
+        [id]="project.id"
         [title]="project.title"
         [description]="project.description">
       </app-project-card>
     }
   </div>
-
 </section>

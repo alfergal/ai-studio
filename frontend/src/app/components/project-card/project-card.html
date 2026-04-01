@@ -8,35 +8,31 @@
     >
       AI Project
     </span>
-
-    <span
-      class="text-xs text-text-light opacity-0 transition group-hover:opacity-100"
-    >
-      Open →
-    </span>
   </div>
 
   <!-- Content -->
   <div>
     <h2 class="text-xl font-semibold text-text tracking-tight">
-      {{ title }}
+      {{ title() }}
     </h2>
 
     <p class="mt-3 text-sm text-text-light leading-relaxed">
-      {{ description }}
+      {{ description() }}
     </p>
   </div>
 
-  <!-- CTA -->
-  <button
-    class="mt-6 w-full rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-primary-dark hover:scale-[1.02] active:scale-[0.98]"
-  >
-    Try project
-  </button>
-
-  <!-- Hover glow effect -->
+  <!-- Hover glow -->
   <div
     class="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition group-hover:opacity-100"
     style="box-shadow: 0 0 0 1px var(--color-border), 0 10px 30px rgba(0,0,0,0.08);"
   ></div>
+
+  <!-- CTA -->
+  <button
+    type="button"
+    [routerLink]="['/project', id()]"
+    class="mt-6 w-full rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-primary-dark hover:scale-[1.02] active:scale-[0.98]"
+  >
+    Try project
+  </button>
 </article>

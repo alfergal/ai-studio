@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 
-@Component({
-  selector: 'app-project-detail',
-  imports: [],
-  templateUrl: './project-detail.html',
-  styleUrl: './project-detail.css',
-})
-export class ProjectDetail {}
+private route = inject(ActivatedRoute);
+
+id = toSignal(
+  this.route.paramMap,
+  { initialValue: null }
+);
