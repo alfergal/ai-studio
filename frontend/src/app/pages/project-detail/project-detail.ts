@@ -18,11 +18,10 @@ export class ProjectDetail {
     this.route.paramMap.pipe(
       map(params => params.get('id') ?? '')
     ),
-    { initialValue: null }
+    { initialValue: '' }
   );
 
   project = computed(() =>
-    PROJECTS.find(p => p.id === this.id())
+    PROJECTS.find(p => p.id === this.id()) ?? null
   );
-
 }
