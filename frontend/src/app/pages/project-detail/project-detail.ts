@@ -1,8 +1,8 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject, computed, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
-import { PROJECTS } from '../../data/projects.data';
+import { PROJECTS, Project } from '../../data/projects.data';
 
 @Component({
   selector: 'app-project-detail',
@@ -11,7 +11,6 @@ import { PROJECTS } from '../../data/projects.data';
   styleUrl: './project-detail.css',
 })
 export class ProjectDetail {
-
   private route = inject(ActivatedRoute);
 
   id = toSignal(
@@ -21,7 +20,11 @@ export class ProjectDetail {
     { initialValue: '' }
   );
 
-  project = computed(() =>
+  project = computed<Project | null>(() =>
     PROJECTS.find(p => p.id === this.id()) ?? null
   );
+
+  age = signal<number | null>(null);
+  sex = signal<'male' | 'female'>('male');
+  result = signal<string | null>(null);
 }
