@@ -1,15 +1,43 @@
-<section class="p-6">
-  @if (project()) {
+<section class="max-w-xl mx-auto py-10">
 
-    <h1 class="text-3xl font-bold">
-      {{ project()!.title }}
-    </h1>
+  <h1 class="text-2xl font-bold mb-2">
+    {{ project()?.title }}
+  </h1>
 
-    <p class="mt-4 text-text-light">
-      {{ project()!.description }}
-    </p>
+  <p class="mb-6 text-text-light">
+    {{ project()?.description }}
+  </p>
 
-  } @else {
-    <p>Project not found</p>
+  @if (id() === 'titanic') {
+
+    <input
+      type="number"
+      placeholder="Age"
+      class="w-full mb-3 border border-border bg-surface rounded-lg px-4 py-2"
+      (input)="age.set($any($event.target).value)"
+    />
+
+    <select
+      class="w-full mb-3 border border-border bg-surface rounded-lg px-4 py-2"
+      (change)="sex.set($any($event.target).value)"
+    >
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+
+    <button
+      class="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-dark"
+      (click)="predict()"
+    >
+      Predict
+    </button>
+
+    @if (result()) {
+      <p class="mt-4">
+        Result: <strong>{{ result() }}</strong>
+      </p>
+    }
+
   }
+
 </section>

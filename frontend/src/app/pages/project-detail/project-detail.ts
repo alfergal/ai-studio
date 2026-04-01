@@ -27,4 +27,12 @@ export class ProjectDetail {
   age = signal<number | null>(null);
   sex = signal<'male' | 'female'>('male');
   result = signal<string | null>(null);
+
+  predict() {
+    if (this.sex() === 'female') {
+      this.result.set('Survived');
+    } else {
+      this.result.set('Did not survive');
+    }
+  }
 }
