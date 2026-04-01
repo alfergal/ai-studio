@@ -1,0 +1,10 @@
+<h1 class="text-2xl font-bold mb-4">Projects</h1>
+
+<div class="grid grid-cols-2 gap-4">
+  @for (project of projects; track project.title) {
+    <app-project-card
+      [title]="project.title"
+      [description]="project.description">
+    </app-project-card>
+  }
+</div>
