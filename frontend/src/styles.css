@@ -10,18 +10,23 @@
   --color-secondary: #2c5f7a;
   --color-secondary-light: #4f8ca6;
 
-  --color-background: #f8f6f4;
-  --color-surface: #ffffff;
+  --color-background: #0f172a;
+  --color-surface: #1e293b;
 
-  --color-text: #1f1f1f;
-  --color-text-light: #6b6b6b;
+  --color-text: #e2e8f0;
+  --color-text-light: #94a3b8;
 
-  --color-border: #e5e5e5;
+  --color-border: #334155;
 }
 
 /* Base styles */
 @layer base {
   body {
     @apply bg-background text-text antialiased;
+  }
+
+  ::selection {
+    background-color: var(--color-primary);
+    color: white;
   }
 }
