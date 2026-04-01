@@ -1,3 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import 'tailwindcss';
+@import "tailwindcss";
+
+/* Design system */
+@theme {
+  --color-primary: #ef8745;
+  --color-primary-dark: #c96a2f;
+
+  --color-secondary: #2c5f7a;
+  --color-secondary-light: #4f8ca6;
+
+  --color-background: #f8f6f4;
+  --color-surface: #ffffff;
+
+  --color-text: #1f1f1f;
+  --color-text-light: #6b6b6b;
+
+  --color-border: #e5e5e5;
+}
+
+/* Base styles */
+@layer base {
+  body {
+    @apply bg-background text-text antialiased;
+  }
+}
