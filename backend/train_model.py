@@ -16,7 +16,7 @@ df["IsAlone"] = (df["FamilySize"] == 1).astype(int)
 
 df["FarePerPerson"] = df["Fare"] / df["FamilySize"]
 
-df["Title"] = df["Name"].str.extract(" ([A-Za-z]+)\.", expand=False)
+df["Title"] = df["Name"].str.extract(r" ([A-Za-z]+)\.", expand=False)
 
 df["Title"] = df["Title"].replace(
     ['Lady', 'Countess','Capt','Col','Don','Dr','Major','Rev','Sir','Jonkheer','Dona'],
