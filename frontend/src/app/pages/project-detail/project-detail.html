@@ -25,6 +25,38 @@
       <option value="female">Female</option>
     </select>
 
+    <select
+      class="w-full mb-3 border border-border bg-surface rounded-lg px-4 py-2"
+      (change)="pclass.set($any($event.target).value)"
+    >
+      <option value="1">1st Class</option>
+      <option value="2">2nd Class</option>
+      <option value="3" selected>3rd Class</option>
+    </select>
+
+    <div>
+      <label class="text-sm text-text-light">
+        Fare: {{ fare() }}
+      </label>
+
+      <input
+        type="range"
+        min="0"
+        max="500"
+        step="1"
+        [value]="fare()"
+        (input)="fare.set($any($event.target).value)"
+        class="w-full mb-3 accent-primary mt-2"
+      />
+    </div>
+
+    <input
+      type="number"
+      placeholder="Family Size"
+      class="w-full mb-3 border border-border bg-surface rounded-lg px-4 py-2"
+      (input)="familySize.set($any($event.target).value)"
+    />
+
     <button
       class="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-dark"
       (click)="predict()"

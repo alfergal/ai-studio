@@ -1,8 +1,11 @@
-<nav class="p-4 bg-gray-800 text-white flex gap-4">
-  <a routerLink="/">Home</a>
-  <a routerLink="/projects">Projects</a>
+<nav class="flex gap-6 p-4 border-b border-border bg-surface">
+  <a routerLink="/" class="hover:text-primary cursor-pointer">
+    Home
+  </a>
+
+  <a routerLink="/projects" class="hover:text-primary cursor-pointer">
+    Projects
+  </a>
 </nav>
 
-<div class="p-4">
-  <router-outlet></router-outlet>
-</div>
+<router-outlet></router-outlet>

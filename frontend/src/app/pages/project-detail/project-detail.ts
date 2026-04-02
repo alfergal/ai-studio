@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { PROJECTS, Project } from '../../data/projects.data';
+import { HttpClient } from '@angular/common/http';
+import { API_URL } from '../../config/api.config';
 
 @Component({
   selector: 'app-project-detail',
@@ -10,8 +12,11 @@ import { PROJECTS, Project } from '../../data/projects.data';
   templateUrl: './project-detail.html',
   styleUrl: './project-detail.css',
 })
+
 export class ProjectDetail {
   private route = inject(ActivatedRoute);
+  private http = inject(HttpClient);
+
 
   id = toSignal(
     this.route.paramMap.pipe(
@@ -26,13 +31,21 @@ export class ProjectDetail {
 
   age = signal<number | null>(null);
   sex = signal<'male' | 'female'>('male');
+  pclass = signal<number>(3);
+  fare = signal<number>(10);
+  familySize = signal<number>(1);
   result = signal<string | null>(null);
 
+
   predict() {
-    if (this.sex() === 'female') {
-      this.result.set('Survived');
-    } else {
-      this.result.set('Did not survive');
-    }
+    this.http.post<any>(`${API_URL}/predict`, {
+      age: this.age(),
+      sex: this.sex(),
+      pclass: this.pclass(),
+      fare: this.fare(),
+      familySize: this.familySize()
+    }).subscribe(res => {
+      this.result.set(res.prediction);
+    });
   }
 }
