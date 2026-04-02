@@ -31,10 +31,8 @@ df["Title"] = df["Title"].map({
 
 df["AgeBin"] = pd.cut(df["Age"], bins=5, labels=False)
 
-# --- DROP ---
 df = df.drop(["SibSp", "Parch", "Name"], axis=1)
 
-# --- TRAIN ---
 X = df.drop("Survived", axis=1)
 y = df["Survived"]
 

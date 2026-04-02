@@ -1,75 +1,82 @@
 <section class="max-w-xl mx-auto py-10">
-
-  <h1 class="text-2xl font-bold mb-2">
-    {{ project()?.title }}
-  </h1>
-
-  <p class="mb-6 text-text-light">
-    {{ project()?.description }}
-  </p>
+  <header class="mb-6">
+    <h1 class="text-2xl font-bold mb-2">{{ project()?.title }}</h1>
+    <p class="text-text-light">{{ project()?.description }}</p>
+  </header>
 
   @if (id() === 'titanic') {
+    <div class="space-y-4">
 
-    <input
-      type="number"
-      placeholder="Age"
-      class="w-full mb-3 border border-border bg-surface rounded-lg px-4 py-2"
-      (input)="age.set($any($event.target).value)"
-    />
+      <fieldset class="space-y-3 border-none p-0">
+        <input
+          type="number"
+          placeholder="Age"
+          class="w-full border border-border bg-surface rounded-lg px-4 py-2"
+          (input)="age.set($any($event.target).value)"
+        />
 
-    <select
-      class="w-full mb-3 border border-border bg-surface rounded-lg px-4 py-2"
-      (change)="sex.set($any($event.target).value)"
-    >
-      <option value="male">Male</option>
-      <option value="female">Female</option>
-    </select>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <select
+            class="w-full border border-border bg-surface rounded-lg px-4 py-2"
+            (change)="sex.set($any($event.target).value)"
+          >
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
 
-    <select
-      class="w-full mb-3 border border-border bg-surface rounded-lg px-4 py-2"
-      (change)="pclass.set($any($event.target).value)"
-    >
-      <option value="1">1st Class</option>
-      <option value="2">2nd Class</option>
-      <option value="3" selected>3rd Class</option>
-    </select>
+          <select
+            class="w-full border border-border bg-surface rounded-lg px-4 py-2"
+            (change)="pclass.set($any($event.target).value)"
+          >
+            <option value="1">1st Class</option>
+            <option value="2">2nd Class</option>
+            <option value="3" selected>3rd Class</option>
+          </select>
+        </div>
 
-    <div>
-      <label class="text-sm text-text-light">
-        Fare: {{ fare() }}
-      </label>
+        <div class="py-2">
+          <label class="text-sm text-text-light block mb-1"> Fare: {{ fare() }} </label>
+          <input
+            type="range" min="0" max="500" step="1"
+            [value]="fare()"
+            (input)="fare.set($any($event.target).value)"
+            class="w-full accent-primary"
+          />
+        </div>
 
-      <input
-        type="range"
-        min="0"
-        max="500"
-        step="1"
-        [value]="fare()"
-        (input)="fare.set($any($event.target).value)"
-        class="w-full mb-3 accent-primary mt-2"
-      />
+        <input
+          type="number"
+          placeholder="Family Size"
+          class="w-full border border-border bg-surface rounded-lg px-4 py-2"
+          (input)="familySize.set($any($event.target).value)"
+        />
+      </fieldset>
+
+      <button
+        class="w-full bg-primary text-white py-2 rounded-lg transition disabled:opacity-50"
+        [disabled]="loading()"
+        (click)="predict()"
+      >
+        {{ loading() ? 'Predicting...' : 'Predict' }}
+      </button>
+
+      <footer>
+        @if (loading()) {
+          <div class="mt-4 text-sm text-text-light animate-pulse">Calling ML model...</div>
+        } @else if (result() && percentage() !== null) {
+          <div class="mt-6 space-y-2">
+            <p class="text-lg font-semibold">{{ result() }} ({{ percentage() }}%)</p>
+            <div class="w-full bg-gray-700 rounded-lg h-3 overflow-hidden">
+              <div
+                class="h-3 rounded-lg transition-all duration-500"
+                [style.width.%]="percentage()"
+                [style.background]="barColor()"
+              ></div>
+            </div>
+          </div>
+        }
+      </footer>
+
     </div>
-
-    <input
-      type="number"
-      placeholder="Family Size"
-      class="w-full mb-3 border border-border bg-surface rounded-lg px-4 py-2"
-      (input)="familySize.set($any($event.target).value)"
-    />
-
-    <button
-      class="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-dark"
-      (click)="predict()"
-    >
-      Predict
-    </button>
-
-    @if (result()) {
-      <p class="mt-4">
-        Result: <strong>{{ result() }}</strong>
-      </p>
-    }
-
   }
-
 </section>
