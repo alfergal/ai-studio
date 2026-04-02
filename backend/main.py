@@ -13,8 +13,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-model = joblib.load("model.joblib")
-
+model, features = joblib.load("model.joblib")
 
 @app.get("/")
 def root():
@@ -33,20 +32,31 @@ def predict(data: dict):
         fare = float(data.get("fare", 10))
         family_size = int(data.get("familySize", 1))
 
+        is_alone = 1 if family_size == 1 else 0
+        fare_per_person = fare / family_size if family_size > 0 else fare
+        title = 1
+        age_bin = int(age // 10)
+
         input_df = pd.DataFrame([{
             "Pclass": pclass,
             "Sex": sex,
             "Age": age,
             "Fare": fare,
-            "FamilySize": family_size
-        }])
+            "FamilySize": family_size,
+            "IsAlone": is_alone,
+            "FarePerPerson": fare_per_person,
+            "Title": title,
+            "AgeBin": age_bin
+        }])[features]
 
         print("DF:", input_df)
 
         prediction = model.predict(input_df)[0]
+        proba = model.predict_proba(input_df)[0][1]
 
         return {
-            "prediction": "Survived" if prediction == 1 else "Did not survive"
+            "prediction": "Survived" if prediction == 1 else "Did not survive",
+            "probability": round(float(proba), 3)
         }
 
     except Exception as e:
