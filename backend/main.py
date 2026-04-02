@@ -23,23 +23,32 @@ def root():
 
 @app.post("/predict")
 def predict(data: dict):
-    sex = 1 if data["sex"] == "female" else 0
-    age = float(data["age"])
+    try:
+        print("INPUT:", data)
 
-    pclass = int(data.get("pclass", 3))
-    fare = float(data.get("fare", 10))
-    family_size = int(data.get("familySize", 1))
+        sex = 1 if data["sex"] == "female" else 0
+        age = float(data["age"])
 
-    input_df = pd.DataFrame([{
-        "Pclass": pclass,
-        "Sex": sex,
-        "Age": age,
-        "Fare": fare,
-        "FamilySize": family_size
-    }])
+        pclass = int(data.get("pclass", 3))
+        fare = float(data.get("fare", 10))
+        family_size = int(data.get("familySize", 1))
 
-    prediction = model.predict(input_df)[0]
+        input_df = pd.DataFrame([{
+            "Pclass": pclass,
+            "Sex": sex,
+            "Age": age,
+            "Fare": fare,
+            "FamilySize": family_size
+        }])
 
-    return {
-        "prediction": "Survived" if prediction == 1 else "Did not survive"
-    }
+        print("DF:", input_df)
+
+        prediction = model.predict(input_df)[0]
+
+        return {
+            "prediction": "Survived" if prediction == 1 else "Did not survive"
+        }
+
+    except Exception as e:
+        print("ERROR:", str(e))
+        return {"error": str(e)}
