@@ -3,8 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { PROJECTS, Project } from '../../data/projects.data';
-import { HttpClient } from '@angular/common/http';
-import { API_URL } from '../../config/api.config';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-project-detail',
@@ -15,8 +14,7 @@ import { API_URL } from '../../config/api.config';
 
 export class ProjectDetail {
   private route = inject(ActivatedRoute);
-  private http = inject(HttpClient);
-
+  private api = inject(ApiService);
 
   id = toSignal(
     this.route.paramMap.pipe(
@@ -38,13 +36,15 @@ export class ProjectDetail {
 
 
   predict() {
-    this.http.post<any>(`${API_URL}/predict`, {
+    const payload = {
       age: this.age(),
       sex: this.sex(),
       pclass: this.pclass(),
       fare: this.fare(),
       familySize: this.familySize()
-    }).subscribe(res => {
+    };
+
+    this.api.predict(payload).subscribe((res: any) => {
       this.result.set(res.prediction);
     });
   }
